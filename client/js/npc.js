@@ -76,9 +76,17 @@ define(['character'], function(Character) {
 			{"condition": function(game){return (game.player.invincible);},
 			 "text": [
 				"Did you not listen to what I said?!!",
+				"Aaaah Dear %NAME%, you are so %QUALITY%…",
 				"the famous fire-potion only lasts a few seconds",
 				"You shouldn't be wasting them talking to me…"
-			]},
+				],
+			  "regexp":[/%NAME%/g, /%QUALITY%/g],
+			  "replace":[function(game){return game.player.name;},
+						 function(game){
+							var quals = ["fun", "stupid", "bright"];
+							return quals[Math.floor(Math.random() * 3)];
+						}]
+			},
 			{"condition": function(game){return ((game.player.getSpriteName() == "firefox")
 											&& !(game.player.invincible));},
 			 "text": [
@@ -232,6 +240,16 @@ define(['character'], function(Character) {
 				}
 				else{
 					msg = NpcTalk[this.itemKind][this.discourse]["text"][this.talkIndex];
+				}
+				if(typeof NpcTalk[this.itemKind][this.discourse].regexp !== "undefined"){
+					if(_.isArray(NpcTalk[this.itemKind][this.discourse].regexp)){
+						for(var i=0, l=NpcTalk[this.itemKind][this.discourse].regexp.length; i<l;i++){
+							msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp[i], NpcTalk[this.itemKind][this.discourse].replace[i](game));
+						}
+					}
+					else{
+						msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp, NpcTalk[this.itemKind][this.discourse].replace(game));
+					}
 				}
             }
             this.talkIndex += 1;

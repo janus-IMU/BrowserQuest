@@ -40,7 +40,7 @@ function specific_shapes(tileset, tileId){
 	_.each(extra_shapes, function(value, key) {
 		if(typeof tileset.tileproperties[tileId][key] !== "undefined"){
 	log.debug(key+":"+JSON.stringify(tileId));
-			tileset.tileproperties[tileId][key]=undefined;
+			delete tileset.tileproperties[tileId][key];
 			_.each(value, function(tiles, attribute) {
 				var list_modified=[];
 				for(var i=0;i<tiles.length;i++){
@@ -118,7 +118,7 @@ function preprocessMap(json) {
 									ok = true;
 								}
 								else{
-									c[i].height = undefined;
+									delete c[i].height;
 								}
 							}
 						}
@@ -143,13 +143,13 @@ function preprocessMap(json) {
 							tileId = c[i].origin + (j*tileSetWidth) + k;
 							if(typeof tileset.tileproperties[tileId] !== "undefined"){
 								if(typeof tileset.tileproperties[tileId].tl !== "undefined"){
-									tileset.tileproperties[tileId].tl = undefined;
+									delete tileset.tileproperties[tileId].tl;
 								}
 								if(typeof tileset.tileproperties[tileId].tr !== "undefined"){
-									tileset.tileproperties[tileId].tr = undefined;
+									delete tileset.tileproperties[tileId].tr;
 								}
 								if(typeof tileset.tileproperties[tileId].bl !== "undefined"){
-									tileset.tileproperties[tileId].bl = undefined;
+									delete tileset.tileproperties[tileId].bl;
 								}
 							}
 							else{

@@ -2,7 +2,7 @@
 define(function() {
 
     var Storage = Class.extend({
-        init: function() {
+        init: function(externals) {
             if(this.hasLocalStorage() && localStorage.data) {
                 this.data = JSON.parse(localStorage.data);
             } else {
@@ -41,12 +41,36 @@ define(function() {
             }
         },
 
-        clear: function() {
+        clear: function(externals) {
             if(this.hasLocalStorage()) {
                 localStorage.data = "";
                 this.resetData();
+                if(_.isArray(externals)){
+					for(var i = 0, l = externals.length ; i<l; i++){
+						if(typeof localStorage[externals[i]] !== "undefined"){
+							delete localStorage[externals[i]];
+						}
+					}
+				}
+				else if(typeof localStorage[externals] !== "undefined"){
+					delete localStorage[externals];
+				}
             }
         },
+        
+        // Externals
+        getExternal: function(external){
+			if(this.hasLocalStorage() && (typeof localStorage[external] !== "undefined")) {
+				return JSON.parse(localStorage[external]);
+			}
+		},
+		
+		setExternal: function(external, value){
+			if(this.hasLocalStorage() && (typeof localStorage[external] !== "undefined")) {
+				localStorage[external] = JSON.stringify(value);
+			}
+		},
+
 
         // Player
 
