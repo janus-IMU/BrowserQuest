@@ -240,15 +240,15 @@ define(['character'], function(Character) {
 				}
 				else{
 					msg = NpcTalk[this.itemKind][this.discourse]["text"][this.talkIndex];
-				}
-				if(typeof NpcTalk[this.itemKind][this.discourse].regexp !== "undefined"){
-					if(_.isArray(NpcTalk[this.itemKind][this.discourse].regexp)){
-						for(var i=0, l=NpcTalk[this.itemKind][this.discourse].regexp.length; i<l;i++){
-							msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp[i], NpcTalk[this.itemKind][this.discourse].replace[i](game));
+					if(typeof NpcTalk[this.itemKind][this.discourse].regexp !== "undefined"){
+						if(_.isArray(NpcTalk[this.itemKind][this.discourse].regexp)){
+							for(var i=0, l=NpcTalk[this.itemKind][this.discourse].regexp.length; i<l;i++){
+								msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp[i], NpcTalk[this.itemKind][this.discourse].replace[i](game));
+							}
 						}
-					}
-					else{
-						msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp, NpcTalk[this.itemKind][this.discourse].replace(game));
+						else{
+							msg = msg.replace(NpcTalk[this.itemKind][this.discourse].regexp, NpcTalk[this.itemKind][this.discourse].replace(game));
+						}
 					}
 				}
             }
